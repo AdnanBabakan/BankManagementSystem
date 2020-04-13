@@ -21,8 +21,6 @@ public class Main extends Application {
         Config.initialize();
         DBConnection.connect(Config.getConfig("db_file"));
 
-        DBConnection.run("INSERT INTO accounts (FirstName, LastName, Password, Balance) VALUES ('Adnan', 'Babakan', '123456', '1000')");
-
         Parent root = FXMLLoader.load(getClass().getResource("MainFrame.fxml"));
         primaryStage.setTitle(Config.getConfig("title"));
         primaryStage.setScene(new Scene(root, Integer.parseInt(Config.getConfig("width")), Integer.parseInt(Config.getConfig("height"))));

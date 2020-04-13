@@ -32,17 +32,19 @@
             <Pane layoutY="54.0" prefHeight="646.0" prefWidth="506.0" style="-fx-background-color: #535c68;">
                <children>
                   <Text fill="WHITE" layoutX="385.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ساخت حساب بانکی" />
-                  <TextField layoutX="53.0" layoutY="102.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="41.0" prefWidth="400.0" />
-                  <Text fill="WHITE" layoutX="438.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="نام" textAlignment="RIGHT" />
-                  <TextField layoutX="53.0" layoutY="184.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="41.0" prefWidth="400.0" />
-                  <Text fill="WHITE" layoutX="385.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="نام خانوادگی" textAlignment="RIGHT" />
-                  <TextField layoutX="51.0" layoutY="432.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="41.0" prefWidth="400.0" />
-                  <Text fill="WHITE" layoutX="343.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="موجودی اولیه (ریال)" textAlignment="RIGHT" />
-                  <Button layoutX="52.0" layoutY="486.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="400.0" text="ایجاد حساب" />
-                  <Text fill="WHITE" layoutX="405.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="رمز عبور" textAlignment="RIGHT" />
-                  <Text fill="WHITE" layoutX="376.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="تکرار رمز عبور" textAlignment="RIGHT" />
-                  <PasswordField layoutX="53.0" layoutY="267.0" prefHeight="41.0" prefWidth="400.0" />
-                  <PasswordField layoutX="51.0" layoutY="357.0" prefHeight="41.0" prefWidth="400.0" />
+                  <TextField fx:id="signUpFirstName" layoutX="53.0" layoutY="111.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="41.0" prefWidth="400.0" />
+                  <Text fill="WHITE" layoutX="439.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="نام" textAlignment="RIGHT" />
+                  <TextField fx:id="signUpLastName" layoutX="53.0" layoutY="184.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="41.0" prefWidth="400.0" />
+                  <Text fill="WHITE" layoutX="391.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="نام خانوادگی" textAlignment="RIGHT" />
+                  <TextField fx:id="signUpNationalID" layoutX="54.0" layoutY="256.0" prefHeight="41.0" prefWidth="400.0" />
+                  <Text fill="WHITE" layoutX="414.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="کد ملی" textAlignment="RIGHT" />
+                  <PasswordField fx:id="signUpPassword" layoutX="54.0" layoutY="330.0" prefHeight="41.0" prefWidth="400.0" />
+                  <Text fill="WHITE" layoutX="410.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="رمز عبور" textAlignment="RIGHT" />
+                  <PasswordField fx:id="signUpPasswordRepeat" layoutX="54.0" layoutY="407.0" prefHeight="41.0" prefWidth="400.0" />
+                  <Text fill="WHITE" layoutX="383.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="تکرار رمز عبور" textAlignment="RIGHT" />
+                  <TextField fx:id="signUpBalance" layoutX="53.0" layoutY="485.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="41.0" prefWidth="400.0" />
+                  <Text fill="WHITE" layoutX="348.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="موجودی اولیه (ریال)" textAlignment="RIGHT" />
+                  <Button layoutX="54.0" layoutY="540.0" mnemonicParsing="false" onMouseClicked="#signUpButtonAction" prefHeight="32.0" prefWidth="400.0" text="ایجاد حساب" />
                </children>
             </Pane>
             <Pane layoutX="506.0" layoutY="54.0" prefHeight="331.0" prefWidth="495.0" style="-fx-background-color: #30336b;">

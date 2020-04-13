@@ -1,9 +1,6 @@
 package com.app;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DBConnection {
     private static Connection conn = null;
@@ -26,5 +23,15 @@ public class DBConnection {
         } catch(SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static ResultSet query(String sql) {
+        try {
+            Statement statement = conn.createStatement();
+            return statement.executeQuery(sql);
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }
