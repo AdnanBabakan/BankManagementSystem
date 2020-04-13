@@ -18,6 +18,7 @@ import java.sql.SQLException;
 public class Controller {
     @FXML
     private Button closeButton;
+
     @FXML
     private TextField signUpFirstName;
     @FXML
@@ -30,6 +31,11 @@ public class Controller {
     private TextField signUpPasswordRepeat;
     @FXML
     private TextField signUpBalance;
+
+    @FXML
+    private TextField loginNationalID;
+    @FXML
+    private TextField loginPassword;
 
     private Main main;
     private Scene userScene;
@@ -48,31 +54,74 @@ public class Controller {
     }
 
     public void signUpButtonAction(MouseEvent mouseEvent) {
-        try {
-            ResultSet accounts = DBConnection.query(String.format("SELECT * FROM accounts WHERE NationalID = %s", signUpNationalID.getText()));
-            int accountsCount = 0;
-            while (accounts.next()) {
-                accountsCount++;
-            }
+        if (!(signUpFirstName.getText().trim().isEmpty()
+                || signUpLastName.getText().trim().isEmpty()
+                || signUpNationalID.getText().trim().isEmpty()
+                || signUpPassword.getText().isEmpty()
+                || signUpPasswordRepeat.getText().isEmpty()
+                || signUpBalance.getText().trim().isEmpty())) {
+            if (signUpPassword.getText().equals(signUpPasswordRepeat.getText())) {
+                try {
+                    ResultSet accounts = DBConnection.query(String.format("SELECT * FROM accounts WHERE NationalID = %s", signUpNationalID.getText()));
+                    int accountsCount = 0;
+                    while (accounts.next()) {
+                        accountsCount++;
+                    }
 
-            if (accountsCount == 0) {
-                DBConnection.run(String.format("INSERT INTO accounts (FirstName, LastName, NationalID, Password, Balance) VALUES ('%s', '%s', %s, '%s', %s)",
-                        signUpFirstName.getText(),
-                        signUpLastName.getText(),
-                        signUpNationalID.getText(),
-                        MD5.getMd5(signUpPassword.getText()),
-                        signUpBalance.getText()
-                ));
-                Dialog.show("information", "حساب کاربری با موفقیت ایجاد شد. اکنون میتوانید وارد شوید.");
+                    if (accountsCount == 0) {
+                        DBConnection.run(String.format("INSERT INTO accounts (FirstName, LastName, NationalID, Password, Balance) VALUES ('%s', '%s', %s, '%s', %s)",
+                                signUpFirstName.getText(),
+                                signUpLastName.getText(),
+                                signUpNationalID.getText(),
+                                MD5.getMd5(signUpPassword.getText()),
+                                signUpBalance.getText()
+                        ));
+
+                        signUpFirstName.setText("");
+                        signUpLastName.setText("");
+                        signUpNationalID.setText("");
+                        signUpPassword.setText("");
+                        signUpPasswordRepeat.setText("");
+                        signUpBalance.setText("");
+
+                        Dialog.show("information", "حساب کاربری با موفقیت ایجاد شد. اکنون میتوانید وارد شوید.");
+                    } else {
+                        Dialog.show("error", "یک حساب با این کد ملی از قبل وجود دارد!");
+                    }
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
             } else {
-                Dialog.show("error", "یک حساب با این کد ملی از قبل وجود دارد!");
+                Dialog.show("error", "رمز عبور با تکرار آن یکسان نیست!");
             }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } else {
+            Dialog.show("error", "تمام فیلدها اجباری هستند!");
         }
     }
 
     public void loginButtonAction(MouseEvent mouseEvent) {
-        main.setScene(userScene);
+        if (!(loginNationalID.getText().trim().isEmpty()
+                || loginPassword.getText().isEmpty())) {
+            try {
+                ResultSet account = DBConnection.query(String.format("SELECT * FROM accounts WHERE NationalID = '%s' AND Password = '%s'",
+                        loginNationalID.getText(),
+                        MD5.getMd5(loginPassword.getText())
+                ));
+                boolean isAccountTrue = false;
+                while(account.next()) {
+                    isAccountTrue = true;
+                }
+
+                if(isAccountTrue) {
+                    Dialog.show("information", "آفرین!");
+                } else {
+                    Dialog.show("error", "حسابی با این اطلاعات یافت نشد!");
+                }
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            Dialog.show("error", "ةمام فیلد ها اجباری هستند!");
+        }
     }
 }
