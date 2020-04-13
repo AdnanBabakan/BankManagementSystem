@@ -114,12 +114,14 @@ public class Controller {
                 String accountFirstName = null;
                 String accountLastName = null;
                 String accountNationalID = null;
+                String accountBalance = null;
                 while(account.next()) {
                     isAccountTrue = true;
                     accountNumber = account.getString("AccountNumber");
                     accountFirstName = account.getString("FirstName");
                     accountLastName = account.getString("LastName");
                     accountNationalID = account.getString("NationalID");
+                    accountBalance = account.getString("Balance");
 
                 }
 
@@ -131,6 +133,7 @@ public class Controller {
                     userSceneController.setAccountFirstName(accountFirstName);
                     userSceneController.setAccountLastName(accountLastName);
                     userSceneController.setAccountNationalID(accountNationalID);
+                    userSceneController.setAccountBalance(accountBalance);
                     main.setScene(userScene);
                 } else {
                     Dialog.show("error", "حسابی با این اطلاعات یافت نشد!");

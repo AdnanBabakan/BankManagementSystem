@@ -17,6 +17,8 @@ public class UserSceneController {
     private Label accountLastName;
     @FXML
     private Label accountNationalID;
+    @FXML
+    private Label accountBalance;
 
     public void setMain(Main main) {
         this.main = main;
@@ -40,6 +42,10 @@ public class UserSceneController {
 
     public void setAccountNationalID(String nationalID) {
         accountNationalID.setText(nationalID);
+    }
+
+    public void setAccountBalance(String balance) {
+        accountBalance.setText(balance + " ریال");
     }
 
     public void exitButtonAction(MouseEvent mouseEvent) {

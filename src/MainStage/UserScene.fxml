@@ -30,6 +30,16 @@
                   <Button layoutX="14.0" layoutY="195.0" mnemonicParsing="false" onMouseClicked="#exitButtonAction" prefHeight="25.0" prefWidth="219.0" text="خروج" />
                </children>
             </Pane>
+            <Text fill="WHITE" layoutX="633.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="موجودی:">
+               <font>
+                  <Font size="31.0" />
+               </font>
+            </Text>
+            <Label fx:id="accountBalance" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="500.0" layoutY="63.0" nodeOrientation="LEFT_TO_RIGHT" text="1000000000" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>
