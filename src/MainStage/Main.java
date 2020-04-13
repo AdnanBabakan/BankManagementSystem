@@ -1,6 +1,7 @@
 package MainStage;
 
 import com.app.Config;
+import com.app.DBConnection;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Config.initialize();
+        DBConnection.connect();
 
         Parent root = FXMLLoader.load(getClass().getResource("MainFrame.fxml"));
         primaryStage.setTitle(Config.getConfig("title"));
