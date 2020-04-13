@@ -12,6 +12,7 @@ public class Config {
         configData.put("title", "سیستم مدیریت بانک");
         configData.put("width", "1000");
         configData.put("height", "700");
+        configData.put("db_file", "database.db");
     }
 
     // Get the values of the configurations

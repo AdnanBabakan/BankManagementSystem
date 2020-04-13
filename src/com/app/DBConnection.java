@@ -3,25 +3,28 @@ package com.app;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DBConnection {
-    public static void connect() {
-        Connection conn = null;
+    private static Connection conn = null;
+    private static String DBURL;
 
+    public static void connect(String DBFile) {
         try {
-            String url = "jdbc:sqlite:database.sql";
-            conn = DriverManager.getConnection(url);
+            DBURL = "jdbc:sqlite:" + DBFile;
+            conn = DriverManager.getConnection(DBURL);
             System.out.println("Connection to SQLite has been established.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch(SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+        }
+    }
+
+    public static void run(String sql) {
+        try {
+            Statement statement = conn.createStatement();
+            statement.execute(sql);
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
