@@ -40,6 +40,7 @@ public class Controller {
 
     private Main main;
     private Scene userScene;
+    private UserSceneController userSceneController;
 
     public void setMain(Main main) {
         this.main = main;
@@ -47,6 +48,10 @@ public class Controller {
 
     public void setUserSceneReference(Scene userScene) {
         this.userScene = userScene;
+    }
+
+    public void setUserSceneControllerReference(UserSceneController userSceneController) {
+        this.userSceneController = userSceneController;
     }
 
     public void signUpButtonAction(MouseEvent mouseEvent) {
@@ -105,11 +110,27 @@ public class Controller {
                         MD5.getMd5(loginPassword.getText())
                 ));
                 boolean isAccountTrue = false;
+                String accountNumber = null;
+                String accountFirstName = null;
+                String accountLastName = null;
+                String accountNationalID = null;
                 while(account.next()) {
                     isAccountTrue = true;
+                    accountNumber = account.getString("AccountNumber");
+                    accountFirstName = account.getString("FirstName");
+                    accountLastName = account.getString("LastName");
+                    accountNationalID = account.getString("NationalID");
+
                 }
 
                 if(isAccountTrue) {
+                    loginNationalID.setText("");
+                    loginPassword.setText("");
+
+                    userSceneController.setAccountNumber(accountNumber);
+                    userSceneController.setAccountFirstName(accountFirstName);
+                    userSceneController.setAccountLastName(accountLastName);
+                    userSceneController.setAccountNationalID(accountNationalID);
                     main.setScene(userScene);
                 } else {
                     Dialog.show("error", "حسابی با این اطلاعات یافت نشد!");

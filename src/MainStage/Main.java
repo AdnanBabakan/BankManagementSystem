@@ -48,6 +48,7 @@ public class Main extends Application {
 
         // References
         controller.setUserSceneReference(userScene);
+        controller.setUserSceneControllerReference(userSceneController);
         userSceneController.setMainScene(mainScene);
 
         primaryStage.setTitle(Config.getConfig("title"));
