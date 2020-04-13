@@ -2,6 +2,7 @@ package MainStage;
 
 import com.app.DBConnection;
 import com.app.Dialog;
+import com.app.MD5;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -9,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.security.MessageDigest;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -46,9 +48,10 @@ public class Controller {
                         signUpFirstName.getText(),
                         signUpLastName.getText(),
                         signUpNationalID.getText(),
-                        signUpPassword.getText(),
+                        MD5.getMd5(signUpPassword.getText()),
                         signUpBalance.getText()
                 ));
+                Dialog.show("information", "حساب کاربری با موفقیت ایجاد شد. اکنون میتوانید وارد شوید.");
             } else {
                 Dialog.show("error", "یک حساب با این کد ملی از قبل وجود دارد!");
             }
