@@ -52,7 +52,6 @@ public class Main extends Application {
 
         primaryStage.setTitle(Config.getConfig("title"));
         primaryStage.setScene(mainScene);
-        primaryStage.initStyle(StageStyle.UNDECORATED);
 
         primaryStage.show();
     }

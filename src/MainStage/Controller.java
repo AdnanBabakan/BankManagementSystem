@@ -1,5 +1,6 @@
 package MainStage;
 
+import com.app.BankAccount;
 import com.app.DBConnection;
 import com.app.Dialog;
 import com.app.MD5;
@@ -48,11 +49,6 @@ public class Controller {
         this.userScene = userScene;
     }
 
-    public void closeButtonAction(MouseEvent mouseEvent) {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
-    }
-
     public void signUpButtonAction(MouseEvent mouseEvent) {
         if (!(signUpFirstName.getText().trim().isEmpty()
                 || signUpLastName.getText().trim().isEmpty()
@@ -69,7 +65,8 @@ public class Controller {
                     }
 
                     if (accountsCount == 0) {
-                        DBConnection.run(String.format("INSERT INTO accounts (FirstName, LastName, NationalID, Password, Balance) VALUES ('%s', '%s', %s, '%s', %s)",
+                        DBConnection.run(String.format("INSERT INTO accounts (AccountNumber, FirstName, LastName, NationalID, Password, Balance) VALUES (%s, '%s', '%s', %s, '%s', %s)",
+                                BankAccount.generateAccountNumber(),
                                 signUpFirstName.getText(),
                                 signUpLastName.getText(),
                                 signUpNationalID.getText(),
@@ -113,7 +110,7 @@ public class Controller {
                 }
 
                 if(isAccountTrue) {
-                    Dialog.show("information", "آفرین!");
+                    main.setScene(userScene);
                 } else {
                     Dialog.show("error", "حسابی با این اطلاعات یافت نشد!");
                 }
