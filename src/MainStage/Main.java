@@ -4,10 +4,12 @@ import com.app.Config;
 import com.app.DBConnection;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -16,43 +18,49 @@ public class Main extends Application {
     private double xOffset = 0;
     private double yOffset = 0;
 
+    Stage window;
+
+    Pane mainPane, userPane;
+    Scene mainScene, userScene;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Config.initialize();
         DBConnection.connect(Config.getConfig("db_file"));
 
-        Parent root = FXMLLoader.load(getClass().getResource("MainFrame.fxml"));
+        window = primaryStage;
+
+        // Main frame
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("MainFrame.fxml"));
+        mainPane = loader.load();
+        Controller controller = loader.getController();
+        mainScene = new Scene(mainPane);
+        controller.setMain(this);
+
+        // User frame
+        loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("UserScene.fxml"));
+        userPane = loader.load();
+        UserSceneController userSceneController = loader.getController();
+        userScene = new Scene(userPane);
+        userSceneController.setMain(this);
+
+        // References
+        controller.setUserSceneReference(userScene);
+        userSceneController.setMainScene(mainScene);
+
         primaryStage.setTitle(Config.getConfig("title"));
-        primaryStage.setScene(new Scene(root, Integer.parseInt(Config.getConfig("width")), Integer.parseInt(Config.getConfig("height"))));
+        primaryStage.setScene(mainScene);
         primaryStage.initStyle(StageStyle.UNDECORATED);
-
-        root.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                xOffset = mouseEvent.getSceneX();
-                yOffset = mouseEvent.getSceneY();
-                primaryStage.setOpacity(.8);
-            }
-        });
-
-        root.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                primaryStage.setOpacity(1);
-            }
-        });
-
-        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                primaryStage.setX(mouseEvent.getScreenX() - xOffset);
-                primaryStage.setY(mouseEvent.getScreenY() - yOffset);
-            }
-        });
 
         primaryStage.show();
     }
 
+    public void setScene(Scene scene) {
+        window.setScene(scene);
+
+    }
 
     public static void main(String[] args) {
         launch(args);

@@ -4,6 +4,7 @@ import com.app.DBConnection;
 import com.app.Dialog;
 import com.app.MD5;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -29,6 +30,17 @@ public class Controller {
     private TextField signUpPasswordRepeat;
     @FXML
     private TextField signUpBalance;
+
+    private Main main;
+    private Scene userScene;
+
+    public void setMain(Main main) {
+        this.main = main;
+    }
+
+    public void setUserSceneReference(Scene userScene) {
+        this.userScene = userScene;
+    }
 
     public void closeButtonAction(MouseEvent mouseEvent) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
@@ -58,5 +70,9 @@ public class Controller {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void loginButtonAction(MouseEvent mouseEvent) {
+        main.setScene(userScene);
     }
 }
