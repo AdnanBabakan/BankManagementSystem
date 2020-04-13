@@ -20,5 +20,15 @@
         <jarDirectory url="file://C:/javafx-sdk-14/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/java-libs/charm-glisten-4.4.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="fontawesomefx-8.2" level="project" />
   </component>
 </module>
