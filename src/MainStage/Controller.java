@@ -6,15 +6,14 @@ import com.app.Dialog;
 import com.app.MD5;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-
-import java.security.MessageDigest;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Controller {
     @FXML
@@ -79,6 +78,20 @@ public class Controller {
                                 signUpBalance.getText()
                         ));
 
+                        ResultSet thisAccount = DBConnection.query(String.format("SELECT ID FROM accounts WHERE NationalID = '%s'", signUpNationalID.getText()));
+
+                        DateFormat df = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss");
+                        Date date = new Date();
+
+                        while (thisAccount.next()) {
+                            DBConnection.run(String.format("INSERT INTO transactions (AccountID, Date, Amount, Description) VALUES (%s, '%s', %s, '%s')",
+                                    thisAccount.getInt("ID"),
+                                    df.format(date),
+                                    signUpBalance.getText(),
+                                    "افتتاح حساب"
+                            ));
+                        }
+
                         signUpFirstName.setText("");
                         signUpLastName.setText("");
                         signUpNationalID.setText("");
@@ -116,7 +129,7 @@ public class Controller {
                 String accountLastName = null;
                 String accountNationalID = null;
                 String accountBalance = null;
-                while(account.next()) {
+                while (account.next()) {
                     isAccountTrue = true;
                     accountID = account.getInt("ID");
                     accountNumber = account.getString("AccountNumber");
@@ -127,7 +140,7 @@ public class Controller {
 
                 }
 
-                if(isAccountTrue) {
+                if (isAccountTrue) {
                     loginNationalID.setText("");
                     loginPassword.setText("");
 
@@ -143,7 +156,7 @@ public class Controller {
                 } else {
                     Dialog.show("error", "حسابی با این اطلاعات یافت نشد!");
                 }
-            } catch(SQLException e) {
+            } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
         } else {
