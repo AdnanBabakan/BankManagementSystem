@@ -1,6 +1,7 @@
 package MainStage;
 
 import com.app.DBConnection;
+import com.app.Dialog;
 import com.app.Transaction;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,18 +56,28 @@ public class UserSceneController {
         ObservableList<Transaction> transactions = FXCollections.observableArrayList();
 
         try {
-            ResultSet transactionsQuery = DBConnection.query(String.format("SELECT * FROM transactions WHERE AccountID = '%s'", accountID));
+            ResultSet transactionsQuery = DBConnection.query(String.format("SELECT * FROM transactions WHERE AccountID = '%s' ORDER BY ID DESC", accountID));
             while (transactionsQuery.next()) {
                 transactions.add(new Transaction(transactionsQuery.getString("ID"),
                         transactionsQuery.getString("Date"),
                         transactionsQuery.getString("Amount"),
                         transactionsQuery.getString("Description")));
             }
+
+            ResultSet currentUser = DBConnection.query(currentUserQuery());
+
+            while(currentUser.next()) {
+                setAccountBalance(currentUser.getString("Balance"));
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
         transactionsTable.setItems(transactions);
+    }
+
+    public String currentUserQuery() {
+        return String.format("SELECT * FROM accounts WHERE ID = %s", accountID);
     }
 
     public void setMain(Main main) {
@@ -103,5 +114,51 @@ public class UserSceneController {
 
     public void exitButtonAction(MouseEvent mouseEvent) {
         main.setScene(mainScene);
+    }
+
+    public void updateTransactionsButtonAction(MouseEvent mouseEvent) {
+        updateTransactions();
+    }
+
+    public void withdrawButtonAction(MouseEvent mouseEvent) {
+        int amount = Integer.parseInt(Dialog.ask("برداشت وجه", "لطفا مقدار مورد نظر را وارد کنید:"));
+        ;
+        int userRemainingBalance = 0;
+        try {
+            ResultSet currentUserQuery = DBConnection.query(currentUserQuery());
+            while (currentUserQuery.next()) {
+                userRemainingBalance = currentUserQuery.getInt("Balance");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        if (userRemainingBalance >= amount) {
+            DBConnection.run(String.format("UPDATE accounts SET Balance = %s WHERE ID = %s", userRemainingBalance - amount, accountID));
+            Transaction.newTransaction(accountID, -amount, "برداشت وجه");
+            updateTransactions();
+            Dialog.show("information", "برداشت وجه با موفقیت انجام شد!");
+        } else {
+            Dialog.show("error", "مبلغ درخواستی بیشتر از موجودی شما است!");
+        }
+    }
+
+    public void depositButtonAction(MouseEvent mouseEvent) {
+        int amount = Integer.parseInt(Dialog.ask("واریز وجه", "لطفا مقدار مورد نظر را وارد کنید:"));
+
+        int userRemainingBalance = 0;
+        try {
+            ResultSet currentUserQuery = DBConnection.query(currentUserQuery());
+            while (currentUserQuery.next()) {
+                userRemainingBalance = currentUserQuery.getInt("Balance");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        DBConnection.run(String.format("UPDATE accounts SET Balance = %s WHERE ID = %s", userRemainingBalance + amount, accountID));
+        Transaction.newTransaction(accountID, amount, "واریز وجه");
+        updateTransactions();
+        Dialog.show("information", "واریز وجه با موفقیت انجام شد!");
     }
 }

@@ -1,9 +1,6 @@
 package MainStage;
 
-import com.app.BankAccount;
-import com.app.DBConnection;
-import com.app.Dialog;
-import com.app.MD5;
+import com.app.*;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -80,16 +77,8 @@ public class Controller {
 
                         ResultSet thisAccount = DBConnection.query(String.format("SELECT ID FROM accounts WHERE NationalID = '%s'", signUpNationalID.getText()));
 
-                        DateFormat df = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss");
-                        Date date = new Date();
-
                         while (thisAccount.next()) {
-                            DBConnection.run(String.format("INSERT INTO transactions (AccountID, Date, Amount, Description) VALUES (%s, '%s', %s, '%s')",
-                                    thisAccount.getInt("ID"),
-                                    df.format(date),
-                                    signUpBalance.getText(),
-                                    "افتتاح حساب"
-                            ));
+                            Transaction.newTransaction(thisAccount.getInt("ID"), Integer.parseInt(signUpBalance.getText()), "افتتاح حساب");
                         }
 
                         signUpFirstName.setText("");

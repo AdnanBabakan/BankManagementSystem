@@ -29,9 +29,8 @@
                   <Label fx:id="accountLastName" contentDisplay="RIGHT" layoutX="89.0" layoutY="120.0" nodeOrientation="RIGHT_TO_LEFT" text="LAST NAME" textFill="WHITE" />
                   <Label fx:id="accountNationalID" contentDisplay="RIGHT" layoutX="63.0" layoutY="148.0" nodeOrientation="RIGHT_TO_LEFT" text="NATIONAL CODE" textFill="WHITE" />
                   <Button layoutX="14.0" layoutY="668.0" mnemonicParsing="false" onMouseClicked="#exitButtonAction" prefHeight="25.0" prefWidth="219.0" text="خروج" />
-                  <Button layoutX="12.0" layoutY="180.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="219.0" text="برداشت وجه" />
-                  <Button layoutX="12.0" layoutY="220.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="219.0" text="انتقال وجه" />
-                  <Button layoutX="12.0" layoutY="260.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="219.0" text="واریز وجه" />
+                  <Button layoutX="12.0" layoutY="180.0" mnemonicParsing="false" onMouseClicked="#withdrawButtonAction" prefHeight="25.0" prefWidth="219.0" text="برداشت وجه" />
+                  <Button layoutX="12.0" layoutY="220.0" mnemonicParsing="false" onMouseClicked="#depositButtonAction" prefHeight="25.0" prefWidth="219.0" text="واریز وجه" />
                </children>
             </Pane>
             <Text fill="WHITE" layoutX="262.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="موجودی:">
@@ -52,7 +51,7 @@
                   <TableColumn fx:id="transactionDescriptionColumn" prefWidth="338.0" text="توضیحات" />
                </columns>
             </TableView>
-            <Button fx:id="updateTransactions" layoutX="275.0" layoutY="75.0" mnemonicParsing="false" text="بروزرسانی صورتحساب" />
+            <Button fx:id="updateTransactions" layoutX="275.0" layoutY="75.0" mnemonicParsing="false" onMouseClicked="#updateTransactionsButtonAction" text="بروزرسانی صورتحساب" />
          </children>
       </Pane>
    </children>
