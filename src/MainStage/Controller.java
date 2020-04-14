@@ -110,6 +110,7 @@ public class Controller {
                         MD5.getMd5(loginPassword.getText())
                 ));
                 boolean isAccountTrue = false;
+                int accountID = 0;
                 String accountNumber = null;
                 String accountFirstName = null;
                 String accountLastName = null;
@@ -117,6 +118,7 @@ public class Controller {
                 String accountBalance = null;
                 while(account.next()) {
                     isAccountTrue = true;
+                    accountID = account.getInt("ID");
                     accountNumber = account.getString("AccountNumber");
                     accountFirstName = account.getString("FirstName");
                     accountLastName = account.getString("LastName");
@@ -129,11 +131,14 @@ public class Controller {
                     loginNationalID.setText("");
                     loginPassword.setText("");
 
+                    userSceneController.setAccountID(accountID);
                     userSceneController.setAccountNumber(accountNumber);
                     userSceneController.setAccountFirstName(accountFirstName);
                     userSceneController.setAccountLastName(accountLastName);
                     userSceneController.setAccountNationalID(accountNationalID);
                     userSceneController.setAccountBalance(accountBalance);
+
+                    userSceneController.initialize();
                     main.setScene(userScene);
                 } else {
                     Dialog.show("error", "حسابی با این اطلاعات یافت نشد!");
